@@ -21,7 +21,6 @@ class CreatePaymentCheck extends CreateRecord
             $data['amount_display'] = '—';
             $data['status_label'] = 'Тўловга тайёр';
             $data['amount_hint'] = null;
-            $data['receipt_button_url'] = null;
         }
 
         return $data;

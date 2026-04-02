@@ -53,11 +53,12 @@ class PaymentCheckInfolist
                     ->label('Статус')
                     ->visible(fn (PaymentCheck $record): bool => $record->template !== CheckPageTemplate::DarkMexc),
                 TextEntry::make('receipt_button_url')
-                    ->label('URL тугма')
+                    ->label(fn (PaymentCheck $record): string => $record->template === CheckPageTemplate::DarkMexc
+                        ? 'URL кнопки «Chekni yuborish»'
+                        : 'URL тугма')
                     ->placeholder('—')
                     ->url(fn (?string $state): ?string => filled($state) ? $state : null)
-                    ->openUrlInNewTab()
-                    ->visible(fn (PaymentCheck $record): bool => $record->template !== CheckPageTemplate::DarkMexc),
+                    ->openUrlInNewTab(),
                 TextEntry::make('created_at')
                     ->label('Создан')
                     ->dateTime()

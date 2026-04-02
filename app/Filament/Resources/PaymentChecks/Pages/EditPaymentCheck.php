@@ -23,7 +23,6 @@ class EditPaymentCheck extends EditRecord
             $data['amount_display'] = $this->record->amount_display;
             $data['amount_hint'] = $this->record->amount_hint;
             $data['status_label'] = $this->record->status_label;
-            $data['receipt_button_url'] = $this->record->receipt_button_url;
         }
 
         return $data;

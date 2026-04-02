@@ -87,8 +87,9 @@ class PaymentCheckForm
                     ->default('Тўловга тайёр')
                     ->maxLength(255),
                 TextInput::make('receipt_button_url')
-                    ->label('URL тугма «Чекни бухгалтерияга юбориш»')
-                    ->visible(fn (Get $get): bool => self::isClassicTemplate($get('template')))
+                    ->label(fn (Get $get): string => self::isClassicTemplate($get('template'))
+                        ? 'URL тугма «Чекни бухгалтерияга юбориш»'
+                        : 'URL кнопки «Chekni yuborish»')
                     ->url()
                     ->maxLength(2048),
             ]);

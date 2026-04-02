@@ -373,7 +373,11 @@
             font-weight: 800;
             box-shadow: 0 10px 24px rgba(23, 83, 255, .3);
             cursor: pointer;
-
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            line-height: 54px;
+            box-sizing: border-box;
         }
 
         .foot-note {
@@ -466,8 +470,7 @@
         </main>
 
         <div class="bottom-bar">
-            <button class="primary-btn">Chekni yuborish</button>
-
+            <a class="primary-btn" href="{{ $paymentCheck->receipt_button_url ?: '#' }}">Chekni yuborish</a>
         </div>
     </div>
 
