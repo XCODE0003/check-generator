@@ -34,7 +34,8 @@ class PaymentCheckInfolist
                         return $enum?->label() ?? '—';
                     }),
                 TextEntry::make('document_number')
-                    ->label('Ҳужжат'),
+                    ->label('Ҳужжат')
+                    ->visible(fn (PaymentCheck $record): bool => $record->template !== CheckPageTemplate::DarkMexc),
                 TextEntry::make('bank_name')
                     ->label('Банк номи'),
                 TextEntry::make('card_number')
@@ -43,16 +44,20 @@ class PaymentCheckInfolist
                     ->label('Олувчи'),
                 TextEntry::make('amount_hint')
                     ->label('Матн устида')
-                    ->placeholder('—'),
+                    ->placeholder('—')
+                    ->visible(fn (PaymentCheck $record): bool => $record->template !== CheckPageTemplate::DarkMexc),
                 TextEntry::make('amount_display')
-                    ->label('Асосий қатор'),
+                    ->label('Асосий қатор')
+                    ->visible(fn (PaymentCheck $record): bool => $record->template !== CheckPageTemplate::DarkMexc),
                 TextEntry::make('status_label')
-                    ->label('Статус'),
+                    ->label('Статус')
+                    ->visible(fn (PaymentCheck $record): bool => $record->template !== CheckPageTemplate::DarkMexc),
                 TextEntry::make('receipt_button_url')
                     ->label('URL тугма')
                     ->placeholder('—')
                     ->url(fn (?string $state): ?string => filled($state) ? $state : null)
-                    ->openUrlInNewTab(),
+                    ->openUrlInNewTab()
+                    ->visible(fn (PaymentCheck $record): bool => $record->template !== CheckPageTemplate::DarkMexc),
                 TextEntry::make('created_at')
                     ->label('Создан')
                     ->dateTime()

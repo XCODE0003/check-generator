@@ -6,11 +6,19 @@ use App\Enums\CheckPageTemplate;
 use App\Models\PaymentCheck;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Get;
 use Filament\Schemas\Schema;
 use Illuminate\Validation\ClosureValidationRule;
 
 class PaymentCheckForm
 {
+    public static function isClassicTemplate(mixed $template): bool
+    {
+        $value = $template instanceof CheckPageTemplate ? $template->value : (string) ($template ?? '');
+
+        return $value === '' || $value === CheckPageTemplate::Classic->value;
+    }
+
     public static function configure(Schema $schema): Schema
     {
         return $schema
@@ -43,10 +51,12 @@ class PaymentCheckForm
                     ->label('Дизайн страницы')
                     ->options(CheckPageTemplate::options())
                     ->required()
-                    ->default(CheckPageTemplate::Classic->value),
+                    ->default(CheckPageTemplate::Classic->value)
+                    ->live(),
                 TextInput::make('document_number')
                     ->label('Номер ҳужжат (пилюля)')
-                    ->required()
+                    ->visible(fn (Get $get): bool => self::isClassicTemplate($get('template')))
+                    ->required(fn (Get $get): bool => self::isClassicTemplate($get('template')))
                     ->maxLength(255),
                 TextInput::make('bank_name')
                     ->label('Банк номи')
@@ -62,19 +72,23 @@ class PaymentCheckForm
                     ->maxLength(255),
                 TextInput::make('amount_hint')
                     ->label('Матн устида (kichik, ихтиёрий)')
+                    ->visible(fn (Get $get): bool => self::isClassicTemplate($get('template')))
                     ->default('Тўланадиган суммани менеджердан аниқлаштиринг')
                     ->maxLength(500),
                 TextInput::make('amount_display')
                     ->label('Асосий қатор (қалин матн)')
-                    ->required()
+                    ->visible(fn (Get $get): bool => self::isClassicTemplate($get('template')))
+                    ->required(fn (Get $get): bool => self::isClassicTemplate($get('template')))
                     ->maxLength(255),
                 TextInput::make('status_label')
                     ->label('Статус')
-                    ->required()
+                    ->visible(fn (Get $get): bool => self::isClassicTemplate($get('template')))
+                    ->required(fn (Get $get): bool => self::isClassicTemplate($get('template')))
                     ->default('Тўловга тайёр')
                     ->maxLength(255),
                 TextInput::make('receipt_button_url')
                     ->label('URL тугма «Чекни бухгалтерияга юбориш»')
+                    ->visible(fn (Get $get): bool => self::isClassicTemplate($get('template')))
                     ->url()
                     ->maxLength(2048),
             ]);
