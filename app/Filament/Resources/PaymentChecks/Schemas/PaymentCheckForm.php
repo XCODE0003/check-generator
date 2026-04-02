@@ -6,7 +6,7 @@ use App\Enums\CheckPageTemplate;
 use App\Models\PaymentCheck;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Get;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Illuminate\Validation\ClosureValidationRule;
 
